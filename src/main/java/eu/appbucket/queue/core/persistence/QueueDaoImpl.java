@@ -150,7 +150,7 @@ public class QueueDaoImpl implements QueueDao {
 		}
 	}
 	
-	@CacheEvict(value = "queueStatsCache", key="#queueStats.queueInfo.queueId")
+	@CacheEvict(value = "queueStatsCache", key="{#queueStats.queueInfo.queueId, #queueStats.date}")
 	public void storeQueueStats(QueueStats queueStats) {
 		int numberOfUpdatedRows = jdbcTempalte.update(SQL_UPDATE_QUEUE_STATS_BY_QUEUE_ID_AND_DATE,
 				queueStats.getCalculatedAverageWaitingDuration(),
@@ -164,7 +164,7 @@ public class QueueDaoImpl implements QueueDao {
 		}
 	}
 	
-	@Cacheable(value = "queueStatsCache", key = "#queueId")
+	@Cacheable(value = "queueStatsCache", key = "{#queueId, #statsDate}")
 	public QueueStats getQueueStatsByIdAndDate(int queueId, Date statsDate) {
 		QueueStats queueStats = new QueueStats();
 		queueStats.setDate(statsDate);

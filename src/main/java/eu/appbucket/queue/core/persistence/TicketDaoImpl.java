@@ -36,7 +36,6 @@ public class TicketDaoImpl implements TicketDao {
 		this.jdbcTempalte = jdbcTempalte;
 	}
 	
-	@CacheEvict(value = "highestTicketUpdateCache", key="#queueId")
 	public void storeTicketUpdate(TicketUpdate ticketUpdate) {		
 		jdbcTempalte.update(SQL_INSERT_TICKET_UPDATE, 
 				ticketUpdate.getQueueInfo().getQueueId(),
@@ -46,8 +45,8 @@ public class TicketDaoImpl implements TicketDao {
 				ticketUpdate.getQuality());
 	}
 	
-	@CacheEvict(value = "highestTicketUpdateCache", key="#queueInfo.queueId")
-	public void cleanHighestTicketUpdateByQueueAndDayCache(QueueInfo queueInfo) {
+	@CacheEvict(value = "highestTicketUpdateCache", key = "{#queueInfo.queueId, #fromDate, #toDate}")
+	public void cleanHighestTicketUpdateByQueueAndDayCache(QueueInfo queueInfo, Date fromDate, Date toDate) {
 	}
 	
 	public Collection<TicketUpdate> readTicketUpdatesByQueueAndDate(
@@ -75,7 +74,7 @@ public class TicketDaoImpl implements TicketDao {
 		}		
 	}
 	
-	@Cacheable(value = "highestTicketUpdateCache" , key = "#queueInfo.queueId")
+	@Cacheable(value = "highestTicketUpdateCache" , key = "{#queueInfo.queueId, #fromDate, #toDate}")
 	public TicketUpdate readHighestTicketUpdateByQueueAndDay(
 			QueueInfo queueInfo, Date fromDate, Date toDate, int minAcceptedInputQuality) {
 		TicketUpdate highestTicketUpdate = null;

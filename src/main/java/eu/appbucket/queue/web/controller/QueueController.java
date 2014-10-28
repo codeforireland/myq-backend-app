@@ -69,6 +69,19 @@ public class QueueController {
 		return officeDetails;
 	}
 	
+	@RequestMapping(value = "queues/details", method = RequestMethod.GET)
+	@ResponseBody
+	public Collection<OfficeDetails> getListOfOfficeDetails() {
+		LOGGER.info("getListOfOfficeDetails");
+		Collection<OfficeDetails> officeDetails = new HashSet<OfficeDetails>();
+		Collection<QueueId> queueIds = getListOfQueueIds();
+		for(QueueId queueId: queueIds) {
+			officeDetails.add(getOfficeDetails(queueId.getQueueId()));
+		}
+		LOGGER.info("getListOfOfficeDetails - officeDetails: " + officeDetails);
+		return officeDetails;
+	}
+	
 	@RequestMapping(value = "queues/{queueId}/stats", method = RequestMethod.GET)
 	@ResponseBody
 	public OfficeStats getQueueStats(@PathVariable int queueId) {

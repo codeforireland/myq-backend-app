@@ -70,7 +70,13 @@ public class TicketServiceImpl implements TicketService {
 		ticketUpdate.setQuality(timeBasedInputQualityEstimator.estimateInputQuality(queueDetails, queueStats, ticketUpdate));
 		ticketDao.storeTicketUpdate(ticketUpdate);
 		if(isTicketQualityAcceptable(ticketUpdate) && isTicketHigherThenHighestTicketFromToday(ticketUpdate)) {
-			ticketDao.cleanHighestTicketUpdateByQueueAndDayCache(ticketUpdate.getQueueInfo());
+			int queueId = ticketUpdate.getQueueInfo().getQueueId();
+			Date queueOpeningTime = getQueueOpeningTimeByQueueId(queueId);
+			Date queueClosingTime = getQueueClosingTimeByQueueId(queueId);
+			ticketDao.cleanHighestTicketUpdateByQueueAndDayCache(
+					ticketUpdate.getQueueInfo(),
+					queueOpeningTime,
+					queueClosingTime);
 		}
 	}
 	

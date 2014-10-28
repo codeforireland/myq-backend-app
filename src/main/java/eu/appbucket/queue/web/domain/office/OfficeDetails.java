@@ -18,6 +18,7 @@ public class OfficeDetails {
 	private ContactDetails contactDetails;
 	private String description; 
 	private GeographicalLocation location;
+	private QueueInfo queueInfo;
 	
 	public GeographicalLocation getLocation() {
 		return location;
@@ -50,6 +51,14 @@ public class OfficeDetails {
 		this.contactDetails = contactDetails;
 	}
 	
+	public void setQueueInfo(QueueInfo queueInfo) {
+		this.queueInfo = queueInfo;
+	}
+	
+	public QueueInfo getQueueInfo() {
+		return queueInfo;
+	}
+	
 	public static OfficeDetails fromQueueData(
 			QueueInfo queueInfo, QueueDetails queueDetails) {
 		OfficeDetails officeDetails = new OfficeDetails();
@@ -65,6 +74,7 @@ public class OfficeDetails {
 		officeDetails.setOpeningHours(openingHours);
 		GeographicalLocation location = GeographicalLocation.fromGeographicalLocation(queueDetails.getLocation());
 		officeDetails.setLocation(location);
+		officeDetails.setQueueInfo(queueInfo);
 		return officeDetails;
 	}
 }

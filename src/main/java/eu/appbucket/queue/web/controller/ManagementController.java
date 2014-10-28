@@ -24,7 +24,8 @@ public class ManagementController {
 	@ResponseBody
 	public void resetCaches() {
 		LOGGER.info("resetCaches");
-		managementService.resetCaches();
+		managementService.flushStaticCache();
+		managementService.flushDynamicCache();
 		LOGGER.info("resetCaches.");
 	}
 }

@@ -6,11 +6,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class ManagementServiceImpl implements ManagementService {
 
-	@CacheEvict(value = {"queuesCache", 
-			"queueInfoCache", 
-			"queueDetailsCache",
-			"queueStatsCache",
-			"highestTicketUpdateCache"}, allEntries = true)
-	public void resetCaches() {
+	@CacheEvict(
+			value = {"queuesCache", 
+					"queueInfoCache", 
+					"queueDetailsCache"}, 
+			allEntries = true)
+	public void flushStaticCache() {
+	}
+	
+	
+	@CacheEvict(
+			value = {"queueStatsCache",
+					"highestTicketUpdateCache"}, 
+			allEntries = true)
+	public void flushDynamicCache() {
 	}
 }
