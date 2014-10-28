@@ -145,6 +145,7 @@ public class TimeBasedInputQualityEstimatorImpl150914Test {
 	@Test
 	public void test() {
 		estimateDataStoryEntriesQuality();
+		assertQualityPercentageIsAcceptable(80);
 	}
 	
 	private void estimateDataStoryEntriesQuality() {
@@ -152,10 +153,12 @@ public class TimeBasedInputQualityEstimatorImpl150914Test {
 			entry.setQuality(estimateEntryQuality(entry));
 			System.out.println(entry);
 		}
+		
 	}
 	
 	private int estimateEntryQuality(UserEntry entry) {
-		long averageWaitingTime = 144000L;
+		// long averageWaitingTime = 144000L;
+		long averageWaitingTime = 122390L;
 		int quality = estimator.estimateQuality(
 				entry.getNumber(), 
 				averageWaitingTime, 
@@ -163,5 +166,19 @@ public class TimeBasedInputQualityEstimatorImpl150914Test {
 				openingTime, 
 				closingTime);
 		return quality;
+	}
+	
+	public void assertQualityPercentageIsAcceptable(int expectedMinimumPercentage){
+		int totalNumberOfEntries = dataStore.getUserEntries().size();
+		int totalNumberOfEntriesWithQualityAboveZero = 0;
+		for(UserEntry entry: dataStore.getUserEntries()) {
+			if(entry.getQuality() > 0) {
+				totalNumberOfEntriesWithQualityAboveZero++;
+			}
+		}
+		int percentageOfEntriesWithQualityAboveZero = (100 * totalNumberOfEntriesWithQualityAboveZero) / totalNumberOfEntries;
+		if(percentageOfEntriesWithQualityAboveZero < expectedMinimumPercentage) {
+			throw new AssertionError("percentageOfEntriesWithQualityAboveZero: " + percentageOfEntriesWithQualityAboveZero);
+		}
 	}
 }
