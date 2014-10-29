@@ -8,7 +8,7 @@ public interface TimeBasedInputQualityEstimator {
 	
 	final static int MAX_QUALITY_SCORE = 100;
 	final static int MIN_QUALITY_SCORE = 0;
-	final static int MAX_ACCEPTED_SERVICE_NUMBER_RANGE = 5;
+	final static int MAX_ACCEPTED_SERVICE_NUMBER_RANGE = 10;
 
 	/**
 	 * Estimates quality of inputed serviced number based on average service duration and entry time.

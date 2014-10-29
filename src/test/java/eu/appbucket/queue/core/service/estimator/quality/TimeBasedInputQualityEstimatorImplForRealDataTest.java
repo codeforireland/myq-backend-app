@@ -7,9 +7,10 @@ import java.util.Date;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
-public class TimeBasedInputQualityEstimatorImpl150914Test {
+public class TimeBasedInputQualityEstimatorImplForRealDataTest {
 
 	private static final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 	private TimeBasedInputQualityEstimatorImpl estimator;
@@ -60,7 +61,6 @@ public class TimeBasedInputQualityEstimatorImpl150914Test {
 	
 	private class DateStore {
 		
-		
 		private UserEntry userEntry;
 		private List<UserEntry> userEntries = new ArrayList<UserEntry>();
 		
@@ -87,6 +87,17 @@ public class TimeBasedInputQualityEstimatorImpl150914Test {
 	@Before
 	public void setup() {
 		estimator = new TimeBasedInputQualityEstimatorImpl();
+		
+	}
+
+	@Test
+	public void test_150914() {
+		prepareDate_150914();
+		estimateDataStoryEntriesQuality();
+		assertQualityPercentageIsAcceptable(40);
+	}
+	
+	private void prepareDate_150914() {
 		openingTime = getDateFromString("15/09/2014 08:00:00").getTime();
 		closingTime = getDateFromString("15/09/2014 21:00:00").getTime();
 		dataStore = new DateStore();
@@ -138,26 +149,29 @@ public class TimeBasedInputQualityEstimatorImpl150914Test {
 		dataStore.addEntry("15/09/2014 16:22:56", 263);
 		dataStore.addEntry("15/09/2014 19:09:59", 361);
 		dataStore.addEntry("15/09/2014 19:10:17", 362);
-		dataStore.addEntry("15/09/2014 20:24:41", 400);
-		dataStore.addEntry("15/09/2014 20:25:38", 400);
+		/*dataStore.addEntry("15/09/2014 20:24:41", 400);
+		dataStore.addEntry("15/09/2014 20:25:38", 400);*/
 	}
-
-	@Test
-	public void test() {
-		estimateDataStoryEntriesQuality();
-		assertQualityPercentageIsAcceptable(80);
-	}
-	
 	private void estimateDataStoryEntriesQuality() {
+		int numberOfEntierWithQualityAbove0 = 0;
 		for(UserEntry entry: dataStore.getUserEntries()) {
 			entry.setQuality(estimateEntryQuality(entry));
+			if(entry.getQuality() > 0) {
+				numberOfEntierWithQualityAbove0++;
+			}
+			if(numberOfEntierWithQualityAbove0 > 5 && entry.getQuality() > 0) {
+				recalculateDefaultAverageWaitingTime();
+			}
 			System.out.println(entry);
 		}
 		
 	}
 	
+	private void recalculateDefaultAverageWaitingTime() {
+		
+	}
+	
 	private int estimateEntryQuality(UserEntry entry) {
-		// long averageWaitingTime = 144000L;
 		long averageWaitingTime = 122390L;
 		int quality = estimator.estimateQuality(
 				entry.getNumber(), 
@@ -178,7 +192,78 @@ public class TimeBasedInputQualityEstimatorImpl150914Test {
 		}
 		int percentageOfEntriesWithQualityAboveZero = (100 * totalNumberOfEntriesWithQualityAboveZero) / totalNumberOfEntries;
 		if(percentageOfEntriesWithQualityAboveZero < expectedMinimumPercentage) {
-			throw new AssertionError("percentageOfEntriesWithQualityAboveZero: " + percentageOfEntriesWithQualityAboveZero);
+			throw new AssertionError(
+					"number of entries with quality above 0: " + totalNumberOfEntriesWithQualityAboveZero  + 
+					" out of total number of entries: " + totalNumberOfEntries + 
+					" percentageOfEntriesWithQualityAboveZero: " + percentageOfEntriesWithQualityAboveZero);
 		}
+	}
+	
+	@Test
+	public void test_071014() {
+		prepareDate_071014();
+		estimateDataStoryEntriesQuality();
+		assertQualityPercentageIsAcceptable(40);
+	}
+	
+	private void prepareDate_071014() {
+		openingTime = getDateFromString("07/10/2014 08:00:00").getTime();
+		closingTime = getDateFromString("07/10/2014 21:00:00").getTime();
+		dataStore = new DateStore();
+		dataStore.addEntry("07/10/2014 08:51:26", 21);
+		dataStore.addEntry("07/10/2014 08:51:44", 27);
+		dataStore.addEntry("07/10/2014 08:52:47", 27);
+		dataStore.addEntry("07/10/2014 08:57:47", 38);
+		dataStore.addEntry("07/10/2014 09:27:40", 59);
+		/*dataStore.addEntry("07/10/2014 09:28:25", 59);
+		dataStore.addEntry("07/10/2014 09:28:39", 59);
+		dataStore.addEntry("07/10/2014 09:29:04", 59);
+		dataStore.addEntry("07/10/2014 09:30:20", 59);*/
+		dataStore.addEntry("07/10/2014 09:31:28", 62);
+		dataStore.addEntry("07/10/2014 11:19:03", 105);
+		dataStore.addEntry("07/10/2014 11:35:41", 120);
+		dataStore.addEntry("07/10/2014 11:54:50", 124);
+		dataStore.addEntry("07/10/2014 11:56:35", 125);
+		dataStore.addEntry("07/10/2014 14:05:07", 192);
+		dataStore.addEntry("07/10/2014 14:05:52", 192);
+		dataStore.addEntry("07/10/2014 15:04:53", 226);
+		dataStore.addEntry("07/10/2014 15:39:34", 250);
+		dataStore.addEntry("07/10/2014 16:39:41", 264);
+		dataStore.addEntry("07/10/2014 16:40:23", 265);
+		dataStore.addEntry("07/10/2014 18:20:51", 323);
+		dataStore.addEntry("07/10/2014 18:32:56", 331);
+		/*dataStore.addEntry("07/10/2014 19:07:14", 331);*/
+		dataStore.addEntry("07/10/2014 19:07:27", 344);
+		dataStore.addEntry("07/10/2014 19:11:11", 346);
+		dataStore.addEntry("07/10/2014 19:14:03", 347);
+		dataStore.addEntry("07/10/2014 19:40:20", 351);
+		dataStore.addEntry("07/10/2014 19:40:53", 352);
+		dataStore.addEntry("07/10/2014 19:44:26", 358);
+		dataStore.addEntry("07/10/2014 19:48:01", 359);
+		dataStore.addEntry("07/10/2014 19:48:47", 363);
+	}
+	
+	@Test
+	public void test_141014() {
+		prepareDate_141014();
+		estimateDataStoryEntriesQuality();
+		assertQualityPercentageIsAcceptable(40);
+	}
+	
+	private void prepareDate_141014() {
+		openingTime = getDateFromString("14/10/2014 08:00:00").getTime();
+		closingTime = getDateFromString("14/10/2014 21:00:00").getTime();
+		dataStore = new DateStore();
+		dataStore.addEntry("14/10/2014 08:18:44", 9);
+		dataStore.addEntry("14/10/2014 08:19:30", 10);
+		dataStore.addEntry("14/10/2014 13:01:45", 152);
+		dataStore.addEntry("14/10/2014 13:18:01", 153);
+		dataStore.addEntry("14/10/2014 13:29:37", 156);
+		dataStore.addEntry("14/10/2014 15:17:50", 155);
+		dataStore.addEntry("14/10/2014 19:07:15", 356);
+		dataStore.addEntry("14/10/2014 19:10:29", 356);
+		dataStore.addEntry("14/10/2014 19:11:23", 358);
+		dataStore.addEntry("14/10/2014 19:14:07", 359);
+		dataStore.addEntry("14/10/2014 19:16:08", 360);
 	}
 }

@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import eu.appbucket.queue.core.domain.queue.OpeningTimes;
@@ -45,10 +46,10 @@ public class TimeBasedInputQualityEstimatorImplTest {
 	@Test
 	public void testWhenEntryValueAndTimeAtHighBandForTopScore() {
 		int servicedNumber = 10;
-		long entryTimeAtLowBandForTopScore = 
+		long entryTimeAtHighBandForTopScore = 
 				servicedNumber * AVERAGE_SERVICE_DUATION;		
 		int actualEstimation = estimateQualityWrapper(
-				servicedNumber, entryTimeAtLowBandForTopScore);
+				servicedNumber, entryTimeAtHighBandForTopScore);
 		assertEquals(TimeBasedInputQualityEstimatorImpl.MAX_QUALITY_SCORE, actualEstimation);
 	}
 	
@@ -78,7 +79,7 @@ public class TimeBasedInputQualityEstimatorImplTest {
 				servicedNumber, entryTime);;
 		assertTrue(actualEstimation > TimeBasedInputQualityEstimatorImpl.MIN_QUALITY_SCORE);
 		assertTrue(actualEstimation < TimeBasedInputQualityEstimatorImpl.MAX_QUALITY_SCORE);
-		assertEquals(36, actualEstimation);
+		assertEquals(84, actualEstimation);
 	}
 	
 	@Test
@@ -89,13 +90,13 @@ public class TimeBasedInputQualityEstimatorImplTest {
 				servicedNumber, entryTime);
 		assertTrue(actualEstimation > TimeBasedInputQualityEstimatorImpl.MIN_QUALITY_SCORE);
 		assertTrue(actualEstimation < TimeBasedInputQualityEstimatorImpl.MAX_QUALITY_SCORE);
-		assertEquals(84, actualEstimation);
+		assertEquals(96, actualEstimation);
 	}
 	
 	@Test
 	public void testWhenEntryValueIsOutOfTheAcceptedRange() {
-		int servicedNumber = 20;
-		long entryTime = (servicedNumber + 26) * AVERAGE_SERVICE_DUATION;
+		int servicedNumber = 1;
+		long entryTime = (servicedNumber + 10) * AVERAGE_SERVICE_DUATION;
 		int actualEstimation = estimateQualityWrapper(
 				servicedNumber, entryTime);
 		assertEquals(TimeBasedInputQualityEstimatorImpl.MIN_QUALITY_SCORE, actualEstimation);
