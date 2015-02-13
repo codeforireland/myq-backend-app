@@ -33,7 +33,7 @@ public class QueueDaoImpl implements QueueDao {
 	private JdbcTemplate jdbcTempalte;
 	private static final Logger LOGGER = Logger.getLogger(QueueDaoImpl.class);
 	
-	private final static String SQL_SELECT_QUEUES = "SELECT * FROM queues";
+	private final static String SQL_SELECT_QUEUES = "SELECT * FROM queues where test = 0";
 	private final static String SQL_SELECT_QUEUE_INFO_BY_QUEUE_ID = "SELECT * FROM queues WHERE queue_id = ?";
 	private final static String SQL_SELECT_QUEUE_DETAILS_BY_QUEUE_ID = "SELECT * FROM queues_details WHERE queue_id = ?";
 	private final static String SQL_SELECT_QUEUE_OPENING_HOURS_BY_QUEUE_ID = "SELECT * FROM queues_opening_hours WHERE queue_id = ?";
