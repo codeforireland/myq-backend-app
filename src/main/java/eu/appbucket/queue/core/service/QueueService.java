@@ -8,10 +8,11 @@ import eu.appbucket.queue.core.domain.queue.QueueStats;
 
 public interface QueueService {
 	
-	public Collection<QueueInfo> getQeueues();
-	public QueueInfo getQueueInfoByQueueId(int queueId);	                 	
-	public QueueDetails getQueueDetailsByQueueId(int queueId);
+	Collection<QueueInfo> getProductionQueues();
+	Collection<QueueInfo> getTestQueues();
+	QueueInfo getQueueInfoByQueueId(int queueId);	                 	
+	QueueDetails getQueueDetailsByQueueId(int queueId);
 	
-	public QueueStats getQueueStatsByQueueId(int queueId);
-	public void updateQueueStats(QueueStats queueStats); 
+	QueueStats getQueueStatsByQueueId(int queueId);
+	void updateQueueStats(QueueStats queueStats); 
 }

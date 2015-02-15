@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import eu.appbucket.queue.core.domain.queue.QueueDetails;
@@ -40,15 +41,29 @@ public class QueueController {
 	
 	@RequestMapping(value = "queues", method = RequestMethod.GET)
 	@ResponseBody
-	public Collection<QueueId> getListOfQueueIds() {
-		LOGGER.info("getListOfQueueIds");
+	public Collection<QueueId> getListOfQueueIds(
+			@RequestParam(value = "test", required = false) Integer testFlag) {
+		LOGGER.info("getListOfQueueIds, test = " + testFlag);
 		Collection<QueueId> queueIds = new HashSet<QueueId>();
-		Collection<QueueInfo> queueInfos = queueService.getQeueues();
-		for(QueueInfo queueInfo: queueInfos) {
+		Collection<QueueInfo> queues;
+		if(findProductionQueues(testFlag)) {
+			queues = queueService.getProductionQueues();
+		} else {
+			queues = queueService.getTestQueues();
+		}
+		for(QueueInfo queueInfo: queues) {
 			queueIds.add(QueueId.fromQueueInfo(queueInfo));
 		}		
 		LOGGER.info("getListOfQueueIds - queueIds: " + queueIds);
 		return queueIds;
+	}
+	
+	private boolean findProductionQueues(Integer test) {
+		if(test == null || test == 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	@Deprecated
@@ -71,10 +86,11 @@ public class QueueController {
 	
 	@RequestMapping(value = "queues/details", method = RequestMethod.GET)
 	@ResponseBody
-	public Collection<OfficeDetails> getListOfOfficeDetails() {
+	public Collection<OfficeDetails> getListOfOfficeDetails(
+			@RequestParam(value = "test", required = false) Integer testFlag) {
 		LOGGER.info("getListOfOfficeDetails");
 		Collection<OfficeDetails> officeDetails = new HashSet<OfficeDetails>();
-		Collection<QueueId> queueIds = getListOfQueueIds();
+		Collection<QueueId> queueIds = getListOfQueueIds(testFlag);
 		for(QueueId queueId: queueIds) {
 			officeDetails.add(getOfficeDetails(queueId.getQueueId()));
 		}

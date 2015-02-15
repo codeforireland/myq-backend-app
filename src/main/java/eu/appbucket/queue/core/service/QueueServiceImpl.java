@@ -22,9 +22,14 @@ public class QueueServiceImpl implements QueueService {
 		this.queueDao = queueDao;
 	}
 	
-	public Collection<QueueInfo> getQeueues() {
-		Collection<QueueInfo> colleciton = queueDao.getQeueues();		
-		return colleciton;
+	public Collection<QueueInfo> getProductionQueues() {
+		Collection<QueueInfo> queues = queueDao.getProductionQueues();		
+		return queues;
+	}
+	
+	public Collection<QueueInfo> getTestQueues() {
+		Collection<QueueInfo> queues = queueDao.getTestQueues();		
+		return queues;
 	}
 	
 	public QueueInfo getQueueInfoByQueueId(int queueId) {

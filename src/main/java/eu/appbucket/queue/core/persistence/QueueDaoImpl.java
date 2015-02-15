@@ -33,7 +33,8 @@ public class QueueDaoImpl implements QueueDao {
 	private JdbcTemplate jdbcTempalte;
 	private static final Logger LOGGER = Logger.getLogger(QueueDaoImpl.class);
 	
-	private final static String SQL_SELECT_QUEUES = "SELECT * FROM queues where test = 0";
+	private final static String SQL_SELECT_PRODUCTION_QUEUES = "SELECT * FROM queues where test = 0";
+	private final static String SQL_SELECT_TEST_QUEUES = "SELECT * FROM queues where test = 1";
 	private final static String SQL_SELECT_QUEUE_INFO_BY_QUEUE_ID = "SELECT * FROM queues WHERE queue_id = ?";
 	private final static String SQL_SELECT_QUEUE_DETAILS_BY_QUEUE_ID = "SELECT * FROM queues_details WHERE queue_id = ?";
 	private final static String SQL_SELECT_QUEUE_OPENING_HOURS_BY_QUEUE_ID = "SELECT * FROM queues_opening_hours WHERE queue_id = ?";
@@ -51,11 +52,16 @@ public class QueueDaoImpl implements QueueDao {
 	}
 	
 	@Cacheable("queuesCache")
-	public Collection<QueueInfo> getQeueues() {		
-		List<QueueInfo> queues = jdbcTempalte.query(SQL_SELECT_QUEUES, new QueueInfoMapper());
+	public Collection<QueueInfo> getProductionQueues() {		
+		List<QueueInfo> queues = jdbcTempalte.query(SQL_SELECT_PRODUCTION_QUEUES, new QueueInfoMapper());
 		return queues;
 	}
 
+	public Collection<QueueInfo> getTestQueues() {
+		List<QueueInfo> queues = jdbcTempalte.query(SQL_SELECT_TEST_QUEUES, new QueueInfoMapper());
+		return queues;
+	}
+	
 	@Cacheable(value = "queueInfoCache", key = "#queueId")
 	public QueueInfo getQueueInfoById(int queueId) {		
 		return jdbcTempalte.queryForObject(SQL_SELECT_QUEUE_INFO_BY_QUEUE_ID, new QueueInfoMapper(), queueId);

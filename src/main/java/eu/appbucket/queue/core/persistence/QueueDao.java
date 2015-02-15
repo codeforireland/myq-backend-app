@@ -9,7 +9,8 @@ import eu.appbucket.queue.core.domain.queue.QueueStats;
 
 public interface QueueDao {
 	
-	public Collection<QueueInfo> getQeueues();
+	public Collection<QueueInfo> getProductionQueues();
+	public Collection<QueueInfo> getTestQueues();
 	
 	public QueueInfo getQueueInfoById(int queueId);
 	
