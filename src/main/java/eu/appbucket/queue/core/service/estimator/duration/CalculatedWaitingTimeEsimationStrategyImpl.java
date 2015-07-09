@@ -13,7 +13,7 @@ import eu.appbucket.queue.core.domain.ticket.TicketEstimation;
  * proper calculations.
  */
 @Component("calculatedWaitingTimeEsimationStrategy")
-public class CalculatedWaitingTimeEsimationStrategyImpl implements WaitingTimeEsimationStrategy {
+public class CalculatedWaitingTimeEsimationStrategyImpl implements WaitingTimeEstimationStrategy {
 	
 	public TicketEstimation estimateTimeToBeServiced(QueueDetails queueDetails, QueueStats queueStats, int ticketNumber) {
 		long ticketTimeToBeServiced = 

@@ -4,5 +4,5 @@ import eu.appbucket.queue.core.domain.queue.QueueStats;
 
 public interface WaitingTimeEstimatorStrategyFactory {
 	
-	WaitingTimeEsimationStrategy getStrategy(QueueStats queueStats);
+	WaitingTimeEstimationStrategy getStrategy(QueueStats queueStats);
 }

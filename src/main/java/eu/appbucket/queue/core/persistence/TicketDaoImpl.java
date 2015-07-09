@@ -90,4 +90,10 @@ public class TicketDaoImpl implements TicketDao {
 		}
 		return highestTicketUpdate;
 	}
+
+    @Override
+    public Collection<TicketUpdate> readTicketUpdatesByQueueAndDate(QueueInfo queueInfo, Date fromDate, Date toDate) {
+        int minAcceptedInputQuality = 0;
+        return this.readTicketUpdatesByQueueAndDate(queueInfo, fromDate, toDate, minAcceptedInputQuality);
+    }
 }

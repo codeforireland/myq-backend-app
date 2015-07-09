@@ -52,4 +52,16 @@ public class QueueServiceImpl implements QueueService {
 	public void updateQueueStats(QueueStats queueStats) {
 		queueDao.storeQueueStats(queueStats);	
 	}
+
+    public Date getQueueOpeningTimeByQueueId(int queueId) {
+        QueueDetails  queueDetails  = getQueueDetailsByQueueId(queueId);
+        Date queueOpeningTime = new Date(queueDetails.getTodayOpeningTimesUTC().getOpeningTime());
+        return queueOpeningTime;
+    }
+
+    public Date getQueueClosingTimeByQueueId(int queueId) {
+        QueueDetails  queueDetails  = getQueueDetailsByQueueId(queueId);
+        Date queueClosingTime = new Date(queueDetails.getTodayOpeningTimesUTC().getClosingTime());
+        return queueClosingTime;
+    }
 }

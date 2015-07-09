@@ -11,11 +11,11 @@ import eu.appbucket.queue.core.domain.ticket.TicketEstimation;
 
 public class DefaultWaitingTimeEsimationStrategyImplTest {
 	
-	private DefaultWaitingTimeEsimationStrategyImpl sut;
+	private DefaultWaitingTimeEstimationStrategyImpl sut;
 	
 	@Before
 	public void setup() {
-		sut = new DefaultWaitingTimeEsimationStrategyImpl();
+		sut = new DefaultWaitingTimeEstimationStrategyImpl();
 	}
 	
 	@Test

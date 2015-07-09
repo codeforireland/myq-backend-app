@@ -16,7 +16,7 @@ import eu.appbucket.queue.core.domain.queue.QueueStats;
 import eu.appbucket.queue.core.domain.ticket.TicketEstimation;
 import eu.appbucket.queue.core.domain.ticket.TicketUpdate;
 import eu.appbucket.queue.core.persistence.TicketDao;
-import eu.appbucket.queue.core.service.estimator.duration.WaitingTimeEsimationStrategy;
+import eu.appbucket.queue.core.service.estimator.duration.WaitingTimeEstimationStrategy;
 import eu.appbucket.queue.core.service.estimator.duration.WaitingTimeEstimatorStrategyFactory;
 import eu.appbucket.queue.core.service.estimator.quality.TimeBasedInputQualityEstimator;
 import eu.appbucket.queue.core.service.util.TimeGenerator;
@@ -54,7 +54,7 @@ public class TicketServiceImpl implements TicketService {
 	}
 	
 	public TicketEstimation getTicketEstimation(QueueDetails queueDetails, QueueStats queueStats, int ticketId) {
-		WaitingTimeEsimationStrategy estimatorStrategy = waitingTimeEstimatorStrategyFactory.getStrategy(queueStats);
+		WaitingTimeEstimationStrategy estimatorStrategy = waitingTimeEstimatorStrategyFactory.getStrategy(queueStats);
 		TicketEstimation ticketEstimation = estimatorStrategy.estimateTimeToBeServiced(queueDetails, queueStats, ticketId);
 		return ticketEstimation;
 	}
@@ -71,8 +71,8 @@ public class TicketServiceImpl implements TicketService {
 		ticketDao.storeTicketUpdate(ticketUpdate);
 		if(isTicketQualityAcceptable(ticketUpdate) && isTicketHigherThenHighestTicketFromToday(ticketUpdate)) {
 			int queueId = ticketUpdate.getQueueInfo().getQueueId();
-			Date queueOpeningTime = getQueueOpeningTimeByQueueId(queueId);
-			Date queueClosingTime = getQueueClosingTimeByQueueId(queueId);
+			Date queueOpeningTime = queueService.getQueueOpeningTimeByQueueId(queueId);
+			Date queueClosingTime = queueService.getQueueClosingTimeByQueueId(queueId);
 			ticketDao.cleanHighestTicketUpdateByQueueAndDayCache(
 					ticketUpdate.getQueueInfo(),
 					queueOpeningTime,
@@ -114,10 +114,11 @@ public class TicketServiceImpl implements TicketService {
 		}
 		return false;
 	}
+
 	private Collection<TicketUpdate> getTicketUpdatesFromToday(QueueInfo queueInfo) {
 		int queueId = queueInfo.getQueueId();
-		Date queueOpeningTime = getQueueOpeningTimeByQueueId(queueId);
-		Date queueClosingTime = getQueueClosingTimeByQueueId(queueId);		
+		Date queueOpeningTime = queueService.getQueueOpeningTimeByQueueId(queueId);
+		Date queueClosingTime = queueService.getQueueClosingTimeByQueueId(queueId);
 		Collection<TicketUpdate> todayTicketUpdates = 
 				ticketDao.readTicketUpdatesByQueueAndDate(
 						queueInfo, 
@@ -126,17 +127,7 @@ public class TicketServiceImpl implements TicketService {
 		return todayTicketUpdates;
 	}
 	
-	private Date getQueueOpeningTimeByQueueId(int queueId) {
-		QueueDetails  queueDetails  = queueService.getQueueDetailsByQueueId(queueId);
-		Date queueOpeningTime = new Date(queueDetails.getTodayOpeningTimesUTC().getOpeningTime());
-		return queueOpeningTime;
-	}
-	
-	private Date getQueueClosingTimeByQueueId(int queueId) {
-		QueueDetails  queueDetails  = queueService.getQueueDetailsByQueueId(queueId);
-		Date queueClosingTime = new Date(queueDetails.getTodayOpeningTimesUTC().getClosingTime());
-		return queueClosingTime;
-	}
+
 		
 	private int getTicketAverageServiceDuration(Collection<TicketUpdate> todayTicketUpdates, QueueInfo queueInfo) {				
 		Map<Integer, Set<TicketUpdate>> ticketNumberToUpdates = groupUpdatesForPerTicket(todayTicketUpdates);				
@@ -170,7 +161,7 @@ public class TicketServiceImpl implements TicketService {
 		Set<Integer> averageTicketServiceDurationsPerTicket = new HashSet<Integer>();
 		Set<Integer> ticketNumbers = ticketNumberToUpdates.keySet();
 		Set<TicketUpdate> updatesPerTicket;
-		Date queueOpeningTime = getQueueOpeningTimeByQueueId(queueInfo.getQueueId());
+		Date queueOpeningTime = queueService.getQueueOpeningTimeByQueueId(queueInfo.getQueueId());
 		for(int ticketNumber: ticketNumbers) {
 			averageTicketServiceDurationsPerTicket.clear();
 			updatesPerTicket = ticketNumberToUpdates.get(ticketNumber);
@@ -208,8 +199,8 @@ public class TicketServiceImpl implements TicketService {
 
 	public TicketUpdate getHighestTicketUpdatesFromToday(QueueInfo queueInfo) {
 		int queueId = queueInfo.getQueueId();
-		Date queueOpeningTime = getQueueOpeningTimeByQueueId(queueId);
-		Date queueClosingTime = getQueueClosingTimeByQueueId(queueId);		
+		Date queueOpeningTime = queueService.getQueueOpeningTimeByQueueId(queueId);
+		Date queueClosingTime = queueService.getQueueClosingTimeByQueueId(queueId);
 		TicketUpdate highestTicketUpdates = ticketDao.readHighestTicketUpdateByQueueAndDay(
 				queueInfo, queueOpeningTime, queueClosingTime, MINIMUM_ACCEPTED_INPUT_QUALITY);
 		return highestTicketUpdates;

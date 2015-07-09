@@ -8,8 +8,8 @@ import eu.appbucket.queue.core.domain.queue.QueueStats;
 @Component
 public class WaitingTimeEstimatorStrategyFactoryImpl implements WaitingTimeEstimatorStrategyFactory {
 
-	private WaitingTimeEsimationStrategy calculatedWaitingTimeEsimationStraregy;
-	private WaitingTimeEsimationStrategy defaultWaitingTimeEsimationStraregy;
+	private WaitingTimeEstimationStrategy calculatedWaitingTimeEsimationStraregy;
+	private WaitingTimeEstimationStrategy defaultWaitingTimeEsimationStraregy;
 	
 	@Autowired
 	public void setCalculatedWaitingTimeEsimationStrategy(
@@ -19,11 +19,11 @@ public class WaitingTimeEstimatorStrategyFactoryImpl implements WaitingTimeEstim
 
 	@Autowired
 	public void setDefaultWaitingTimeEsimationStrategy(
-			DefaultWaitingTimeEsimationStrategyImpl defaultWaitingTimeEsimationStraregy) {
+			DefaultWaitingTimeEstimationStrategyImpl defaultWaitingTimeEsimationStraregy) {
 		this.defaultWaitingTimeEsimationStraregy = defaultWaitingTimeEsimationStraregy;
 	}
 
-	public WaitingTimeEsimationStrategy getStrategy(QueueStats queueStats) {
+	public WaitingTimeEstimationStrategy getStrategy(QueueStats queueStats) {
 		if(queueStats.getCalculatedAverageWaitingDuration() != null) {
 			return calculatedWaitingTimeEsimationStraregy;
 		}		
