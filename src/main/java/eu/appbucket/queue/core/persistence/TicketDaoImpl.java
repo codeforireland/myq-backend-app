@@ -70,6 +70,7 @@ public class TicketDaoImpl implements TicketDao {
 			ticketUpdate.setCurrentlyServicedTicketNumber(rs.getInt("served_ticket"));
 			ticketUpdate.setCreated(rs.getTimestamp("created"));
 			ticketUpdate.setQuality(rs.getInt("quality"));
+            ticketUpdate.setId(rs.getInt("update_id"));
 			return ticketUpdate;
 		}		
 	}

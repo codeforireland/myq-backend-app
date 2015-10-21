@@ -35,8 +35,8 @@ public class TicketController {
 	public void setTicketService(TicketService ticketService) {
 		this.ticketService = ticketService;
 	}
-	
-	@RequestMapping(value = "queues/{queueId}/tickets/{ticketId}", method = RequestMethod.GET)
+
+	@RequestMapping(value = "v1/queues/{queueId}/tickets/{ticketId}", method = RequestMethod.GET)
 	@ResponseBody
 	public TicketStatus getTicketStats(@PathVariable int queueId, @PathVariable int ticketId) {		
 		LOGGER.info("getTicketStats - queueId: " + queueId + ", ticketId: " + ticketId);
@@ -48,7 +48,7 @@ public class TicketController {
 		return ticketStatus;
 	}
 	
-	@RequestMapping(value = "queues/{queueId}/tickets/{ticketId}", method = RequestMethod.POST)
+	@RequestMapping(value = "v1/queues/{queueId}/tickets/{ticketId}", method = RequestMethod.POST)
 	@ResponseBody
 	public TicketStatus postTicketUpdate(@PathVariable int queueId, @PathVariable int ticketId, 
 			@RequestBody TicketInput ticketInput) {

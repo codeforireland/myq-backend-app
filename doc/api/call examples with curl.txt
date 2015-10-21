@@ -6,7 +6,7 @@
 curl -i -H \
 	"Content-Type: application/json" \
 	-X GET \
-	http://localhost:8080/Qman/queues
+	http://localhost:8080/queues
 
 curl -i -H \
 	"Content-Type: application/json" \
@@ -21,7 +21,7 @@ curl -i -H \
 curl -i -H \
 	"Content-Type: application/json" \
 	-X GET \
-	http://localhost:8080/Qman/queues/3/details
+	http://localhost:8080/queues/3/details
 
 curl -i -H \
 	"Content-Type: application/json" \
@@ -42,7 +42,7 @@ Note: this is convenience call which is result of list of queues and queue detai
 curl -i -H \
 	"Content-Type: application/json" \
 	-X GET \
-	http://localhost:8080/Qman/queues/details
+	http://localhost:8080/queues/details
 
 curl -i -H \
 	"Content-Type: application/json" \
@@ -58,7 +58,7 @@ curl -i -H \
 curl -i -H \
 	"Content-Type: application/json" \
 	-X GET \
-	http://localhost:8080/Qman/queues/3
+	http://localhost:8080/queues/3
 
 curl -i -H \
 	"Content-Type: application/json" \
@@ -73,7 +73,7 @@ curl -i -H \
 curl -i -H \
 	"Content-Type: application/json" \
 	-X GET \
-	http://localhost:8080/Qman/queues/3/stats
+	http://localhost:8080/queues/3/stats
 
 curl -i -H \
 	"Content-Type: application/json" \
@@ -88,7 +88,7 @@ curl -i -H \
 curl -i -H \
 	"Content-Type: application/json" \
 	-X GET \
-	http://localhost:8080/Qman/queues/3/tickets/2
+	http://localhost:8080/queues/3/tickets/2
 
 curl -i -H \
 	"Content-Type: application/json" \
@@ -103,7 +103,7 @@ curl -i -H \
 curl -i -H \
 	"Content-Type: application/json" \
 	-X POST -d '{"servicedTicketNumber":"117"}' \
-	http://localhost:8080/Qman/queues/3/tickets/1
+	http://localhost:8080/queues/3/tickets/1
 
 curl -i -H \
 	"Content-Type: application/json" \
@@ -118,7 +118,7 @@ curl -i -H \
 curl -i -H \
 	"Content-Type: application/json" \
 	-X GET \
-	http://localhost:8080/Qman/resetCaches
+	http://localhost:8080/resetCaches
 
 curl -i -H \
 	"Content-Type: application/json" \
@@ -132,7 +132,7 @@ curl -i -H \
 curl -i -H \
 	"Content-Type: application/json" \
 	-X POST -d '{"rating":"1"}' \
-	http://localhost:8080/Qman/feedbacks
+	http://localhost:8080/feedbacks
 
 curl -i -H \
 	"Content-Type: application/json" \
@@ -145,7 +145,7 @@ curl -i -H \
 
 curl -i -H "Content-Type: application/json" \
 	-X GET \
-	http://localhost:8080/Qman/feedbacks?offset=1\&limit=15\&sort=rating\&order=desc
+	http://localhost:8080/feedbacks?offset=1\&limit=15\&sort=rating\&order=desc
 
 curl -i -H "Content-Type: application/json" \
 	-X GET \

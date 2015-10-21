@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="myq-backend-app:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="Qman.war">
+      <element id="artifact" artifact-name="myq-backend-app:war exploded" />
+    </root>
+  </artifact>
+</component>

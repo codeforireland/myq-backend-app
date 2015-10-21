@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+
 @Controller(value = "ticketController2")
 public class TicketController {
 
@@ -30,14 +32,16 @@ public class TicketController {
 		this.ticketService = ticketService;
 	}
 
-    @RequestMapping(value = "v2/queues/{queueId}/tickets/{ticketId}", method = RequestMethod.POST)
+    @RequestMapping(value = {"queues/{queueId}/tickets/{ticketId}", "v2/queues/{queueId}/tickets/{ticketId}"}, method = RequestMethod.POST)
     @ResponseBody
     public TicketStatus postTicketUpdate(@PathVariable int queueId, @PathVariable int ticketId,
                                          @RequestBody TicketInput ticketInput) {
         LOGGER.info("postTicketUpdate - queueId: " + queueId + ", ticketId: " + ticketId + ", ticketInput: " + ticketInput);
         saveUserInput(queueId, ticketId, ticketInput);
         TicketStatus ticketStatus = getTicketStatus(queueId, ticketId);
-        LOGGER.info("postTicketUpdate - " + ticketStatus);
+        LOGGER.info("postTicketUpdate - " +
+                "waiting time: " + new Date(ticketStatus.getWaitingTime()) +
+                ", waiting time in milliseconds: " + ticketStatus.getWaitingTime());
         return ticketStatus;
     }
 
@@ -55,12 +59,14 @@ public class TicketController {
         return ticketStatus;
     }
 
-	@RequestMapping(value = "v2/queues/{queueId}/tickets/{ticketId}", method = RequestMethod.GET)
+	@RequestMapping(value = {"queues/{queueId}/tickets/{ticketId}", "v2/queues/{queueId}/tickets/{ticketId}"}, method = RequestMethod.GET)
 	@ResponseBody
 	public TicketStatus getTicketStats(@PathVariable int queueId, @PathVariable int ticketId) {		
 		LOGGER.info("getTicketStats - queueId: " + queueId + ", ticketId: " + ticketId);
         TicketStatus ticketStatus = getTicketStatus(queueId, ticketId);
-		LOGGER.info("getTicketStats - " + ticketStatus);
+        LOGGER.info("getTicketStats - " +
+                "waiting time in milliseconds: " + ticketStatus.getWaitingTime() +
+                ", waiting time: " + new Date(ticketStatus.getWaitingTime()));
 		return ticketStatus;
 	}
 	

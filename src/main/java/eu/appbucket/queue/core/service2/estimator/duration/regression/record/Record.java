@@ -60,20 +60,21 @@ public class Record {
         return id;
     }
 
-    public long getTimeStamp() {
-        return convertDateToUnixTimestamp();
+    public long getTime() {
+        return this.date.getTime();
     }
 
-    private long convertDateToUnixTimestamp() {
+    /*private long convertDateToUnixTimestamp() {
         return this.date.getTime() / 1000;
-    }
+    }*/
 
-    public void setTimeStamp(long timeStamp) {
+    /*public void setTimeStamp(long timeStamp) {
         this.setDate(new Date(timeStamp));
-    }
+    }*/
 
     public static Record fromTicketUpdate(TicketUpdate ticketUpdate) {
         Record record = new Record();
+        record.setId(ticketUpdate.getId());
         record.setServedTicket(ticketUpdate.getCurrentlyServicedTicketNumber());
         record.setUserTicket(ticketUpdate.getClientTicketNumber());
         record.setFlag(Flag.VALID);

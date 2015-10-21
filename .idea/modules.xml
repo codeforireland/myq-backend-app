@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Qman.iml" filepath="$PROJECT_DIR$/Qman.iml" />
+      <module fileurl="file://$PROJECT_DIR$/myq-backend-app.iml" filepath="$PROJECT_DIR$/myq-backend-app.iml" />
     </modules>
   </component>
 </project>

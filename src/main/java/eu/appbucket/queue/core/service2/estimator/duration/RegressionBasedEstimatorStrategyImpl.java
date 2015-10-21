@@ -9,10 +9,12 @@ import eu.appbucket.queue.core.service2.estimator.duration.regression.marker.Dup
 import eu.appbucket.queue.core.service2.estimator.duration.regression.marker.NotInRangeRecordMarkerImpl;
 import eu.appbucket.queue.core.service2.estimator.duration.regression.marker.RecordMarker;
 import eu.appbucket.queue.core.service2.estimator.duration.regression.record.Record;
+import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.HashSet;
 
+@Component
 public class RegressionBasedEstimatorStrategyImpl implements WaitingTimeEstimationStrategy {
 
     public TicketEstimation estimateTimeToBeServiced(

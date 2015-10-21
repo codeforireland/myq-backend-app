@@ -4,7 +4,7 @@
 	<groupId>eu.appbucket.queue</groupId>
 	<artifactId>myq-backend-app</artifactId>
 	<packaging>war</packaging>
-	<version>2.0</version>
+	<version>3.0</version>
 	<name>myq-backend-app</name>
 	<url>http://maven.apache.org</url>
 	<properties>
@@ -143,7 +143,7 @@
         </dependency>
 
 	</dependencies>
-	<!--<build>
+	<build>
 		<finalName>myq-backend-app</finalName>
 		<plugins>
 			<plugin>
@@ -154,18 +154,18 @@
 					<target>1.6</target>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-site-plugin</artifactId>
-				<configuration>
-					<reportPlugins>
-						<plugin>
-							<groupId>org.codehaus.mojo</groupId>
-							<artifactId>findbugs-maven-plugin</artifactId>
-						</plugin>
-					</reportPlugins>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>-->
+    <!--<plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <configuration>
+            <reportPlugins>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>findbugs-maven-plugin</artifactId>
+                </plugin>
+            </reportPlugins>
+        </configuration>
+    </plugin>-->
+</plugins>
+</build>
 </project>

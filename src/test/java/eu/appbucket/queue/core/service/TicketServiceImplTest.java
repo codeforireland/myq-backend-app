@@ -76,14 +76,9 @@ public class TicketServiceImplTest {
 		queueInfo.setQueueId(1);
 		final OpeningTimes openingTimes = new OpeningTimes();
 		openingTimes.setOpeningTime(0);
-		final QueueDetails queueDetails = new QueueDetails() {
-			public OpeningTimes getTodayOpeningTimesUTC() {
-				return openingTimes;
-			}
-		};
 		context.checking(new Expectations() {{
-            oneOf(queueServiceMock).getQueueDetailsByQueueId(queueInfo.getQueueId());
-            will(returnValue(queueDetails));
+            oneOf(queueServiceMock).getQueueOpeningTimeByQueueId(queueInfo.getQueueId());
+            will(returnValue(new Date(0)));
 		}});
 		Set<Integer> actualAverageServiceDurations = 
 				sut.calculateAverageServiceDurations(ticketNumberToUpdates, queueInfo);

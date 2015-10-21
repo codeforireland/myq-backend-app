@@ -12,8 +12,15 @@ public class TicketUpdate {
 	private QueueInfo queueInfo;
 	private Date created;
 	private int quality;
-	
-	public int getQuality() {
+    private int id;
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    public int getId() {
+        return id;
+    }
+    public int getQuality() {
 		return quality;
 	}
 	public void setQuality(int quality) {
@@ -52,4 +59,14 @@ public class TicketUpdate {
 		ticketUpdate.setCreated(new Date());
 		return ticketUpdate;
 	}
+
+    @Override
+    public String toString() {
+        return "TicketUpdate{" +
+                "currentlyServicedTicketNumber=" + currentlyServicedTicketNumber +
+                ", clientTicketNumber=" + clientTicketNumber +
+                ", created=" + created +
+                ", quality=" + quality +
+                '}';
+    }
 }

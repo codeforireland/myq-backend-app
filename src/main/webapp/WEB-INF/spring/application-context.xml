@@ -38,10 +38,10 @@
 			
 	<bean id="dataSource"
 		class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
-		<property name="driverClass" value="${JDBC_DRIVERCLASSNAME}"/>
-		<property name="jdbcUrl" value="${JDBC_URL}"/>
-		<property name="user" value="${JDBC_USERNAME}"/>
-		<property name="password" value="${JDBC_PASSWORD}"/>
+		<property name="driverClass" value="${MYQ_JDBC_DRIVERCLASSNAME}"/>
+		<property name="jdbcUrl" value="${MYQ_JDBC_URL}"/>
+		<property name="user" value="${MYQ_JDBC_USERNAME}"/>
+		<property name="password" value="${MYQ_JDBC_PASSWORD}"/>
 		<property name="idleConnectionTestPeriod" value="3600"/>
 		<property name="testConnectionOnCheckout" value="true"/>
 	</bean>

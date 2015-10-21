@@ -9,6 +9,8 @@ import eu.appbucket.queue.core.persistence.TicketDao;
 import eu.appbucket.queue.core.service.QueueService;
 import eu.appbucket.queue.core.service2.estimator.duration.WaitingTimeEstimationStrategy;
 import eu.appbucket.queue.core.service2.estimator.duration.WaitingTimeEstimatorStrategyFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -21,20 +23,24 @@ public class TicketServiceImpl implements TicketService {
     private QueueService queueService;
     private WaitingTimeEstimatorStrategyFactory waitingTimeEstimatorStrategyFactory;
 
+    @Autowired
     public void setQueueService(QueueService queueService) {
         this.queueService = queueService;
     }
 
+    @Autowired
     public void setTicketDao(TicketDao ticketDao) {
         this.ticketDao = ticketDao;
     }
 
+    @Autowired
+    @Qualifier("v2.waitingTimeEstimatorStrategyFactory")
     public void setWaitingTimeEstimatorStrategyFactory(WaitingTimeEstimatorStrategyFactory waitingTimeEstimatorStrategyFactory) {
         this.waitingTimeEstimatorStrategyFactory = waitingTimeEstimatorStrategyFactory;
     }
 
     public TicketEstimation getTicketEstimation(QueueInfo queueInfo, QueueDetails queueDetails, int ticketId) {
-        queueDetails.getTodayOpeningTimesUTC().getOpeningTime();
+        //queueDetails.getTodayOpeningTimesUTC().getOpeningTime();
         Collection<TicketUpdate> ticketUpdates = getTicketUpdatesFromToday(queueInfo);
         WaitingTimeEstimationStrategy estimatorStrategy = waitingTimeEstimatorStrategyFactory.getStrategy(ticketUpdates.size());
         TicketEstimation ticketEstimation = estimatorStrategy.estimateTimeToBeServiced(queueDetails, ticketUpdates, ticketId);

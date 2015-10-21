@@ -26,8 +26,6 @@
         <module name="Qman" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="Qman" target="1.5" />
-    </bytecodeTargetLevel>
+    <bytecodeTargetLevel target="1.6" />
   </component>
 </project>
