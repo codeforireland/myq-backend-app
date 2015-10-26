@@ -26,7 +26,7 @@ public class EstimatorImpl implements Estimator {
 
     private long estimateTime() {
         double timeAtWhichUserWillBeServed = regression.predict(userTicketNumber);
-        // logRegressionLineForDebuggingOnly(timeAtWhichUserWillBeServed);
+        logRegressionLine(timeAtWhichUserWillBeServed);
         return (long) timeAtWhichUserWillBeServed;
     }
 
@@ -39,11 +39,17 @@ public class EstimatorImpl implements Estimator {
         }
     }
 
-    private void logRegressionLineForDebuggingOnly(double timeAtWhichUserWillBeServed) {
+    private void logRegressionLine(double timeAtWhichUserWillBeServed) {
         StringBuilder output = new StringBuilder("\n");
+        output.append("---------------------------------------------\n");
+        output.append("status\tid\ttime\tserved ticket\n");
+        output.append("---------------------------------------------\n");
         for(Record record: records) {
-            output.append(record.getTime() + "\t" + record.getServedTicket() + "\n");
+            output.append(record.getFlag() + "\t" + record.getId() + "\t" + record.getTime() + "\t" + record.getServedTicket() + "\n");
         }
+        output.append("---------------------------------------------\n");
+        output.append("timeAtWhichUserWillBeServed\tuserTicketNumber\n");
+        output.append("---------------------------------------------\n");
         output.append(((long) timeAtWhichUserWillBeServed) + "\t" + userTicketNumber  + "\n");
         LOGGER.info(output.toString());
     }

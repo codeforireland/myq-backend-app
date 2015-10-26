@@ -1,0 +1,13 @@
+
+-- test data for update today
+insert into updates (queue_id, created, user_ticket, served_ticket)
+values (4, STR_TO_DATE('2015-10-25 8:30:00', '%Y-%m-%d %H:%i:%S'), 100, 1);
+insert into updates (queue_id, created, user_ticket, served_ticket)
+values (4, STR_TO_DATE('2015-10-25 9:30:00', '%Y-%m-%d %H:%i:%S'), 100, 2);
+insert into updates (queue_id, created, user_ticket, served_ticket)
+values (4, STR_TO_DATE('2015-10-25 10:30:00', '%Y-%m-%d %H:%i:%S'), 100, 3);
+insert into updates (queue_id, created, user_ticket, served_ticket)
+values (4, STR_TO_DATE('2015-10-25 11:30:00', '%Y-%m-%d %H:%i:%S'), 100, 4);
+insert into updates (queue_id, created, user_ticket, served_ticket)
+values (4, STR_TO_DATE('2015-10-25 12:30:01', '%Y-%m-%d %H:%i:%S'), 100, 5);
+-- now we can expect that at 13:30 server ticket number will be 6

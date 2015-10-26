@@ -39,9 +39,7 @@ public class TicketController {
         LOGGER.info("postTicketUpdate - queueId: " + queueId + ", ticketId: " + ticketId + ", ticketInput: " + ticketInput);
         saveUserInput(queueId, ticketId, ticketInput);
         TicketStatus ticketStatus = getTicketStatus(queueId, ticketId);
-        LOGGER.info("postTicketUpdate - " +
-                "waiting time: " + new Date(ticketStatus.getWaitingTime()) +
-                ", waiting time in milliseconds: " + ticketStatus.getWaitingTime());
+        LOGGER.info("postTicketUpdate - waiting time: " + ticketStatus.getWaitingTime());
         return ticketStatus;
     }
 
@@ -56,17 +54,17 @@ public class TicketController {
         QueueDetails queueDetails = queueService.getQueueDetailsByQueueId(queueId);
         TicketEstimation ticketEstimation = ticketService.getTicketEstimation(queueInfo, queueDetails, ticketId);
         TicketStatus ticketStatus = TicketStatus.fromTicketEstimation(ticketEstimation);
+        LOGGER.info("getTicketStatus - waiting time in milliseconds: " + ticketStatus.getWaitingTime() +
+                ", waiting time: " + new Date(ticketStatus.getWaitingTime()));
         return ticketStatus;
     }
 
 	@RequestMapping(value = {"queues/{queueId}/tickets/{ticketId}", "v2/queues/{queueId}/tickets/{ticketId}"}, method = RequestMethod.GET)
 	@ResponseBody
-	public TicketStatus getTicketStats(@PathVariable int queueId, @PathVariable int ticketId) {		
+	public TicketStatus getTicketStats(@PathVariable int queueId, @PathVariable int ticketId) {
 		LOGGER.info("getTicketStats - queueId: " + queueId + ", ticketId: " + ticketId);
         TicketStatus ticketStatus = getTicketStatus(queueId, ticketId);
-        LOGGER.info("getTicketStats - " +
-                "waiting time in milliseconds: " + ticketStatus.getWaitingTime() +
-                ", waiting time: " + new Date(ticketStatus.getWaitingTime()));
+        LOGGER.info("getTicketStats - waiting time: " + ticketStatus.getWaitingTime());
 		return ticketStatus;
 	}
 	

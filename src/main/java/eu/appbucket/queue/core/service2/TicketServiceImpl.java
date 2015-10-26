@@ -49,7 +49,7 @@ public class TicketServiceImpl implements TicketService {
 
     private Collection<TicketUpdate> getTicketUpdatesFromToday(QueueInfo queueInfo) {
         int queueId = queueInfo.getQueueId();
-        Date queueOpeningTime = queueService.getQueueOpeningTimeByQueueId(queueInfo.getQueueId());
+        Date queueOpeningTime = queueService.getQueueOpeningTimeByQueueId(queueId);
         Date queueClosingTime = queueService.getQueueClosingTimeByQueueId(queueId);
         Collection<TicketUpdate> todayTicketUpdates =
                 ticketDao.readTicketUpdatesByQueueAndDate(

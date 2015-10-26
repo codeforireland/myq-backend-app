@@ -3,6 +3,7 @@ package eu.appbucket.queue.core.service2.estimator.duration.regression.marker;
 
 import eu.appbucket.queue.core.service2.estimator.duration.regression.record.Flag;
 import eu.appbucket.queue.core.service2.estimator.duration.regression.record.Record;
+import org.apache.log4j.Logger;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -13,6 +14,7 @@ public class DuplicatedRecordMarkerImpl implements RecordMarker {
     private Set<Record> recordsCache;
     private Record currentRecord;
     private RecordMarker nextRecordProcessor;
+    private static final Logger LOGGER = Logger.getLogger(DuplicatedRecordMarkerImpl.class);
 
     public DuplicatedRecordMarkerImpl() {
         recordsCache = new HashSet<Record>();
@@ -63,4 +65,10 @@ public class DuplicatedRecordMarkerImpl implements RecordMarker {
         }
         return false;
     }
+
+    /*private void logRecordsForDebuggingOnlyCollection(Collection<Record> recordsMarked) {
+        for(Record record: recordsMarked) {
+            LOGGER.debug("Duplicate record marker: " + record.getTime() + "\t" + record.getFlag() + "\n");
+        }
+    }*/
 }

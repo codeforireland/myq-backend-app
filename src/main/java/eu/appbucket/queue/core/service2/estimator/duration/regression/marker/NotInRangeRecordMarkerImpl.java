@@ -3,6 +3,7 @@ package eu.appbucket.queue.core.service2.estimator.duration.regression.marker;
 import eu.appbucket.queue.core.service2.estimator.duration.regression.record.Flag;
 import eu.appbucket.queue.core.service2.estimator.duration.regression.record.Record;
 import org.apache.commons.math3.stat.descriptive.rank.Median;
+import org.apache.log4j.Logger;
 
 import java.util.Collection;
 
@@ -21,6 +22,7 @@ public class NotInRangeRecordMarkerImpl implements RecordMarker {
     private long timeBase;
     private Collection<Record> recordsToBeMarked;
     double timeToServeTicketMedian;
+    private static final Logger LOGGER = Logger.getLogger(NotInRangeRecordMarkerImpl.class);
 
     public NotInRangeRecordMarkerImpl(long timeBase) {
         this.timeBase=timeBase;
@@ -109,4 +111,10 @@ public class NotInRangeRecordMarkerImpl implements RecordMarker {
         }
         return false;
     }
+
+    /*private void logRecordsForDebuggingOnlyCollection(Collection<Record> recordsMarked) {
+        for (Record record : recordsMarked) {
+            LOGGER.debug("Not in range record marker: " + record.getTime() + "\t" + record.getFlag() + "\n");
+        }
+    }*/
 }

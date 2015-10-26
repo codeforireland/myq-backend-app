@@ -8,7 +8,9 @@ import eu.appbucket.queue.core.service2.estimator.duration.regression.EstimatorI
 import eu.appbucket.queue.core.service2.estimator.duration.regression.marker.DuplicatedRecordMarkerImpl;
 import eu.appbucket.queue.core.service2.estimator.duration.regression.marker.NotInRangeRecordMarkerImpl;
 import eu.appbucket.queue.core.service2.estimator.duration.regression.marker.RecordMarker;
+import eu.appbucket.queue.core.service2.estimator.duration.regression.record.Flag;
 import eu.appbucket.queue.core.service2.estimator.duration.regression.record.Record;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
@@ -17,14 +19,25 @@ import java.util.HashSet;
 @Component
 public class RegressionBasedEstimatorStrategyImpl implements WaitingTimeEstimationStrategy {
 
+    private static final Logger LOGGER = Logger.getLogger(RegressionBasedEstimatorStrategyImpl.class);
+
     public TicketEstimation estimateTimeToBeServiced(
             QueueDetails queueDetails, Collection<TicketUpdate> ticketUpdates, int ticketNumber) {
         long openingTimeToday = queueDetails.getTodayOpeningTimesUTC().getOpeningTime();
         Collection<Record> records = ticketUpdatesToRecords(ticketUpdates);
         newRecordMarker(openingTimeToday).markRecords(records);
+        logOnlyValidRecords(records);
         TicketEstimation ticketEstimation = new TicketEstimation();
         ticketEstimation.setTimeToBeServiced(estimateTimeAtWhichUserWillBeServed(records, ticketNumber));
         return ticketEstimation;
+    }
+
+    private void logOnlyValidRecords(Collection<Record> records) {
+        for(Record currentRecord: records) {
+            if(currentRecord.getFlag() == Flag.VALID) {
+                LOGGER.info("Record: " + currentRecord.getId() + " was marked as VALID");
+            }
+        }
     }
 
     protected RecordMarker newRecordMarker(long openingTimeToday) {
