@@ -7,4 +7,4 @@ TODO:
 2) Update documentation to represent current implementation of estimator
 
 Full documentation:
-http://adambednarski.weebly.com/myq.html
+http://projects.appbucket.eu/myq.html
