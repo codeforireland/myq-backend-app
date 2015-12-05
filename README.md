@@ -166,9 +166,9 @@ There are 2 parts which needs to be accomplished to add new queue:
 
 1. db configuration
   
-  DB tables needs to be populated with queue specific information:
+DB tables needs to be populated with queue specific information:
 
-  queues: (list of queues) - id - unique queue id (+1 form the last one) - name - short name for the queue/office
+queues: (list of queues) - id - unique queue id (+1 form the last one) - name - short name for the queue/office
 
 queues_details: (details related to the queue/office) - description - description of the queue (what issues can be sorted out in certain office/service etc.), used for showing queue details - latitude/longitude - geographical location of the office, used for showing map - email - address for containing with certain office, shown in queue details - address_line_1 / 2 - physical address of the office, shown in queue details - town_city - self descriptive, shown in queue details - county - self descriptive, shown in queue details - post code - self descriptive, shown in queue details - default_average_waiting_time - how long by default client needs to wait to be serviced, in milliseconds - website - self descriptive, shown in queue details - name - full name of the queue/office
 
