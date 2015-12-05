@@ -21,14 +21,13 @@ The main difference is that v2 was estimating quality of the input at the time u
 The decision about the shape of new algorithm was based on thorough analysis of historical data.
 
 The steps of the algorithm:
+
 1. User enters information what is his ticket number and what is currently serviced ticket number
 2. Input data is filtered and split on 2 categories: valid and invalid, only valid data is used in further steps, there are 2 filters which are responsible for validation of input data:
   - duplicate filter - this filter marks the data as invalid if user with this same ticket number entered 2 or more entries with this same served number (for example: entry1: user ticket=2, served ticket=3, entry2: user ticket=3, served ticket=4, entry3: user ticket=2, served ticket=3 then entry3 will be marked as invalid/duplicate)
   - not in range filter - this filter marks the data as invalid if the increase of the served ticket number does not follow the 3. increase in the time (for example entry1: served ticket=3, time = 3min, entry2: served ticket=4, time=4min, entry3: served ticket5, time=10min, the the average time per ticket is 1min, so the entry3 is not valid as it's way above the average) 
 4. all valid data are used to calculate regression line representing the relation between served ticket and time
 5. the time when user will be served is calculated based on the regression calculation from the previous step
-
-
 
 
 
