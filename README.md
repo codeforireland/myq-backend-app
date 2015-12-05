@@ -164,7 +164,7 @@ TODO
 ## Adding new queue
 There are 2 parts which needs to be accomplished to add new queue:
 
-1. db configuration
+  - DB configuration:
   
 DB tables needs to be populated with queue specific information:
 
@@ -176,7 +176,7 @@ queues_opening_hours: (opening hours on each day of the week) - queue_id - self 
 
 queues_phone_numbers: (phone number to the office) - queue_id - self descriptive - country_code - international country code (without 0x prefix), for example 48 for Poland and 353 for Republic of Ireland - area_code - area code (without 0x prefix), for example 22 for Warsaw area in Poland and 1 for Dublin area in Republic of Ireland - line_number - local phone number - extension - extension of the local phone number (not obligatory)
 
-2. static files configuration (images)
+  - Static files configuration (images)
 
 The files needs to be store on the server which hosts UI or in the mobile application and not on the backend server.
 
